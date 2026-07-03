@@ -1,0 +1,200 @@
+{
+  "users": [
+    {
+      "id": "usr_reader_1",
+      "email": "reader@library.edu",
+      "password": "reader123",
+      "name": "Alex Morgan",
+      "role": "reader",
+      "avatar": "AM",
+      "enrolledCourses": ["crs_1", "crs_2"],
+      "joinedAt": "2025-09-01"
+    },
+    {
+      "id": "usr_reader_2",
+      "email": "sarah@library.edu",
+      "password": "reader123",
+      "name": "Sarah Chen",
+      "role": "reader",
+      "avatar": "SC",
+      "enrolledCourses": ["crs_1", "crs_3"],
+      "joinedAt": "2025-09-15"
+    },
+    {
+      "id": "usr_librarian_1",
+      "email": "librarian@library.edu",
+      "password": "lib123",
+      "name": "Jordan Blake",
+      "role": "librarian",
+      "avatar": "JB",
+      "joinedAt": "2024-01-10"
+    },
+    {
+      "id": "usr_superadmin_1",
+      "email": "admin@library.edu",
+      "password": "admin123",
+      "name": "Dr. Elena Vasquez",
+      "role": "superadmin",
+      "avatar": "EV",
+      "joinedAt": "2023-06-01"
+    }
+  ],
+  "books": [
+    {
+      "id": "bk_1",
+      "title": "Introduction to Machine Learning",
+      "author": "Tom Mitchell",
+      "isbn": "978-0262038049",
+      "category": "Computer Science",
+      "copies": 5,
+      "available": 3,
+      "cover": "ml",
+      "description": "Foundational text covering supervised learning, neural networks, and reinforcement learning."
+    },
+    {
+      "id": "bk_2",
+      "title": "Clean Code",
+      "author": "Robert C. Martin",
+      "isbn": "978-0132350884",
+      "category": "Software Engineering",
+      "copies": 4,
+      "available": 2,
+      "cover": "code",
+      "description": "A handbook of agile software craftsmanship with practical examples."
+    },
+    {
+      "id": "bk_3",
+      "title": "Design of Everyday Things",
+      "author": "Don Norman",
+      "isbn": "978-0465050659",
+      "category": "Design",
+      "copies": 3,
+      "available": 1,
+      "cover": "design",
+      "description": "Classic UX design principles for creating intuitive products."
+    },
+    {
+      "id": "bk_4",
+      "title": "Deep Learning",
+      "author": "Ian Goodfellow",
+      "isbn": "978-0262035613",
+      "category": "Computer Science",
+      "copies": 2,
+      "available": 0,
+      "cover": "dl",
+      "description": "Comprehensive guide to deep learning theory and practice."
+    },
+    {
+      "id": "bk_5",
+      "title": "The Pragmatic Programmer",
+      "author": "David Thomas",
+      "isbn": "978-0135957059",
+      "category": "Software Engineering",
+      "copies": 6,
+      "available": 4,
+      "cover": "pragmatic",
+      "description": "Journey to mastery for software developers at every level."
+    },
+    {
+      "id": "bk_6",
+      "title": "Thinking, Fast and Slow",
+      "author": "Daniel Kahneman",
+      "isbn": "978-0374533557",
+      "category": "Psychology",
+      "copies": 4,
+      "available": 3,
+      "cover": "thinking",
+      "description": "Explores the two systems that drive the way we think."
+    }
+  ],
+  "courses": [
+    {
+      "id": "crs_1",
+      "title": "AI Fundamentals",
+      "instructor": "Dr. Patel",
+      "description": "Learn core AI concepts including search, logic, and machine learning basics.",
+      "duration": "8 weeks",
+      "modules": [
+        { "id": "mod_1", "title": "What is AI?", "completed": true },
+        { "id": "mod_2", "title": "Search Algorithms", "completed": true },
+        { "id": "mod_3", "title": "Machine Learning Intro", "completed": false },
+        { "id": "mod_4", "title": "Neural Networks", "completed": false }
+      ],
+      "linkedBooks": ["bk_1", "bk_4"]
+    },
+    {
+      "id": "crs_2",
+      "title": "Software Craftsmanship",
+      "instructor": "Prof. Kim",
+      "description": "Best practices for writing maintainable, clean, and efficient code.",
+      "duration": "6 weeks",
+      "modules": [
+        { "id": "mod_5", "title": "Clean Code Principles", "completed": true },
+        { "id": "mod_6", "title": "Refactoring Patterns", "completed": false },
+        { "id": "mod_7", "title": "Testing Strategies", "completed": false }
+      ],
+      "linkedBooks": ["bk_2", "bk_5"]
+    },
+    {
+      "id": "crs_3",
+      "title": "Human-Centered Design",
+      "instructor": "Dr. Rivera",
+      "description": "Design thinking and UX principles for digital products.",
+      "duration": "5 weeks",
+      "modules": [
+        { "id": "mod_8", "title": "Design Thinking", "completed": false },
+        { "id": "mod_9", "title": "Usability Heuristics", "completed": false },
+        { "id": "mod_10", "title": "Prototyping", "completed": false }
+      ],
+      "linkedBooks": ["bk_3", "bk_6"]
+    }
+  ],
+  "loans": [
+    {
+      "id": "loan_1",
+      "bookId": "bk_1",
+      "userId": "usr_reader_1",
+      "borrowedAt": "2026-02-15",
+      "dueAt": "2026-03-15",
+      "status": "active"
+    },
+    {
+      "id": "loan_2",
+      "bookId": "bk_2",
+      "userId": "usr_reader_1",
+      "borrowedAt": "2026-02-20",
+      "dueAt": "2026-03-20",
+      "status": "active"
+    },
+    {
+      "id": "loan_3",
+      "bookId": "bk_4",
+      "userId": "usr_reader_2",
+      "borrowedAt": "2026-01-10",
+      "dueAt": "2026-02-10",
+      "status": "overdue"
+    }
+  ],
+  "announcements": [
+    {
+      "id": "ann_1",
+      "title": "New AI Course Available",
+      "body": "Enroll in AI Fundamentals — registration open until March 30.",
+      "createdAt": "2026-02-28",
+      "authorId": "usr_librarian_1"
+    },
+    {
+      "id": "ann_2",
+      "title": "Library Hours Extended",
+      "body": "Reading rooms open until 10 PM on weekdays during exam season.",
+      "createdAt": "2026-03-01",
+      "authorId": "usr_superadmin_1"
+    }
+  ],
+  "stats": {
+    "totalReaders": 248,
+    "activeLoans": 67,
+    "booksInCatalog": 6,
+    "coursesOffered": 3
+  }
+}
