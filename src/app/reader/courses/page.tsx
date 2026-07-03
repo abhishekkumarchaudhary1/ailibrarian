@@ -24,13 +24,13 @@ export default async function CoursesPage() {
       userName={session.name}
       userAvatar={session.avatar}
     >
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-slate-800">My Courses</h2>
-          <p className="text-slate-500">Track your learning progress</p>
+          <h2 className="text-xl font-bold text-slate-800 sm:text-2xl">My Courses</h2>
+          <p className="text-sm text-slate-500 sm:text-base">Track your learning progress</p>
         </div>
-        <Link href="/reader/ai-tutor">
-          <Button variant="secondary">Ask AI Tutor</Button>
+        <Link href="/reader/ai-tutor" className="w-full sm:w-auto">
+          <Button variant="secondary" className="w-full sm:w-auto">Ask AI Tutor</Button>
         </Link>
       </div>
 

@@ -28,15 +28,15 @@ export default async function LibrarianLoansPage() {
             const book = data.books.find((b) => b.id === loan.bookId);
             const reader = data.users.find((u) => u.id === loan.userId);
             return (
-              <Card key={loan.id} className="flex items-center justify-between">
-                <div>
+              <Card key={loan.id} className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="min-w-0">
                   <p className="font-medium text-slate-800">{book?.title}</p>
                   <p className="text-sm text-slate-500">
                     {reader?.name} · Borrowed {loan.borrowedAt} · Due{" "}
                     {loan.dueAt}
                   </p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                   <Badge
                     variant={loan.status === "overdue" ? "danger" : "default"}
                   >

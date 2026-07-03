@@ -25,19 +25,19 @@ export default function HomePage() {
         </Link>
       </nav>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 text-center">
+      <section className="mx-auto max-w-6xl px-4 py-12 text-center sm:px-6 sm:py-20">
         <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-4 py-1.5 text-sm text-blue-700">
           <Sparkles className="h-4 w-4" />
           AI-Powered Library & LMS
         </div>
-        <h1 className="mb-6 text-5xl font-bold tracking-tight text-slate-900">
+        <h1 className="mb-6 text-3xl font-bold tracking-tight text-slate-900 sm:text-5xl">
           Learn smarter with
           <br />
           <span className="bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
             your AI librarian
           </span>
         </h1>
-        <p className="mx-auto mb-10 max-w-xl text-lg text-slate-500">
+        <p className="mx-auto mb-10 max-w-xl text-base text-slate-500 sm:text-lg">
           A unified platform for students, librarians, and administrators —
           browse books, take courses, and get AI-powered study help.
         </p>

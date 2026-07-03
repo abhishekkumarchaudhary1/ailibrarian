@@ -4,6 +4,8 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Send, Bot, User, Mic, MicOff } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { ChatMessage } from "@/components/reader/ChatMessage";
+import type { Book } from "@/lib/types";
 
 interface Message {
   role: "user" | "assistant";
@@ -46,18 +48,23 @@ export function AIChat({ courseId }: { courseId?: string }) {
     {
       role: "assistant",
       content:
-        "Hi! I'm your AI study assistant. Ask me about your courses, assignments, or library resources.",
+        "Hey there! I'm your AI study tutor. Ask me anything about your courses, a topic you're curious about, or books from our library — I'm here to help you learn.",
     },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [listening, setListening] = useState(false);
   const [voiceSupported, setVoiceSupported] = useState(false);
+  const [books, setBooks] = useState<Book[]>([]);
+  const [latestReplyIndex, setLatestReplyIndex] = useState<number | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
 
   useEffect(() => {
     setVoiceSupported(!!getSpeechRecognition());
+    fetch("/api/data")
+      .then((r) => r.json())
+      .then((d) => setBooks(d.books ?? []));
   }, []);
 
   useEffect(() => {
@@ -83,13 +90,17 @@ export function AIChat({ courseId }: { courseId?: string }) {
           body: JSON.stringify({ messages: history, courseId }),
         });
         const data = await res.json();
-        setMessages((m) => [
-          ...m,
-          {
-            role: "assistant",
-            content: data.reply ?? data.error ?? "Something went wrong.",
-          },
-        ]);
+        setMessages((m) => {
+          const next = [
+            ...m,
+            {
+              role: "assistant" as const,
+              content: data.reply ?? data.error ?? "Something went wrong.",
+            },
+          ];
+          setLatestReplyIndex(next.length - 1);
+          return next;
+        });
       } catch {
         setMessages((m) => [
           ...m,
@@ -142,7 +153,7 @@ export function AIChat({ courseId }: { courseId?: string }) {
   }
 
   return (
-    <Card className="flex h-[calc(100vh-12rem)] flex-col p-0 overflow-hidden">
+    <Card className="flex h-[min(70vh,calc(100dvh-11rem))] flex-col overflow-hidden p-0 sm:h-[calc(100vh-12rem)]">
       <div className="flex-1 space-y-4 overflow-y-auto p-5">
         {messages.map((msg, i) => (
           <div
@@ -163,13 +174,21 @@ export function AIChat({ courseId }: { courseId?: string }) {
               )}
             </div>
             <div
-              className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+              className={`max-w-[85%] rounded-2xl px-4 py-3 sm:max-w-[80%] ${
                 msg.role === "assistant"
                   ? "bg-slate-50 text-slate-700"
-                  : "bg-blue-600 text-white"
+                  : "bg-blue-600 text-white text-sm leading-relaxed"
               }`}
             >
-              {msg.content}
+              {msg.role === "assistant" ? (
+                <ChatMessage
+                  content={msg.content}
+                  books={books}
+                  animate={i === latestReplyIndex}
+                />
+              ) : (
+                msg.content
+              )}
             </div>
           </div>
         ))}
@@ -186,7 +205,7 @@ export function AIChat({ courseId }: { courseId?: string }) {
         <div ref={bottomRef} />
       </div>
 
-      <div className="flex gap-2 border-t border-slate-100 p-4">
+      <div className="flex gap-2 border-t border-slate-100 p-3 sm:p-4">
         {voiceSupported && (
           <Button
             type="button"

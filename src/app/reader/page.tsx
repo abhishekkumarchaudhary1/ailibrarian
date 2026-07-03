@@ -29,13 +29,13 @@ export default async function ReaderDashboard() {
       userAvatar={session.avatar}
     >
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-slate-800">
+        <h2 className="text-xl font-bold text-slate-800 sm:text-2xl">
           Welcome back, {session.name.split(" ")[0]}
         </h2>
         <p className="text-slate-500">Here&apos;s your learning overview</p>
       </div>
 
-      <div className="mb-8 grid gap-4 sm:grid-cols-3">
+      <div className="mb-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
         <StatCard label="Active Loans" value={myLoans.length} icon="BookOpen" />
         <StatCard label="Enrolled Courses" value={courses.length} icon="GraduationCap" />
         <StatCard label="Books Available" value={data.books.reduce((a, b) => a + b.available, 0)} icon="Library" />

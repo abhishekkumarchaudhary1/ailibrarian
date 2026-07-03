@@ -14,13 +14,13 @@ export function StatCard({
 }) {
   const Icon = ICONS[icon];
   return (
-    <Card className="flex items-center gap-4">
-      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600">
-        <Icon className="h-5 w-5" />
+    <Card className="flex items-center gap-3 sm:gap-4">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 sm:h-12 sm:w-12">
+        <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
       </div>
-      <div>
-        <p className="text-2xl font-bold text-slate-800">{value}</p>
-        <p className="text-sm text-slate-500">{label}</p>
+      <div className="min-w-0">
+        <p className="text-xl font-bold text-slate-800 sm:text-2xl">{value}</p>
+        <p className="truncate text-xs text-slate-500 sm:text-sm">{label}</p>
       </div>
     </Card>
   );

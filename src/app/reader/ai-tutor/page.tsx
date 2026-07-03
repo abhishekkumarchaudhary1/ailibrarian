@@ -14,7 +14,7 @@ export default async function AITutorPage() {
       userAvatar={session.avatar}
     >
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-slate-800">AI Study Tutor</h2>
+        <h2 className="text-xl font-bold text-slate-800 sm:text-2xl">AI Study Tutor</h2>
         <p className="text-slate-500">
           Powered by Groq — ask about your courses and library resources
         </p>

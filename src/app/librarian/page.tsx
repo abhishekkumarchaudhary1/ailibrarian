@@ -22,13 +22,13 @@ export default async function LibrarianDashboard() {
       userAvatar={session.avatar}
     >
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-slate-800">
+        <h2 className="text-xl font-bold text-slate-800 sm:text-2xl">
           Library Dashboard
         </h2>
         <p className="text-slate-500">Manage books, loans, and readers</p>
       </div>
 
-      <div className="mb-8 grid gap-4 sm:grid-cols-4">
+      <div className="mb-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         <StatCard label="Total Readers" value={data.stats.totalReaders} icon="Users" />
         <StatCard label="Active Loans" value={data.stats.activeLoans} icon="BookOpen" />
         <StatCard label="Books in Catalog" value={data.stats.booksInCatalog} icon="Library" />
@@ -41,14 +41,14 @@ export default async function LibrarianDashboard() {
           const book = data.books.find((b) => b.id === loan.bookId);
           const reader = data.users.find((u) => u.id === loan.userId);
           return (
-            <Card key={loan.id} className="flex items-center justify-between">
-              <div>
+            <Card key={loan.id} className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
                 <p className="font-medium text-slate-800">{book?.title}</p>
                 <p className="text-sm text-slate-500">
                   {reader?.name} · Due {loan.dueAt}
                 </p>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                 <Badge
                   variant={
                     loan.status === "overdue"

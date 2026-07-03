@@ -16,7 +16,7 @@ export function BookCard({
   showBorrow?: boolean;
 }) {
   return (
-    <Card className="flex flex-col gap-3">
+    <Card className="flex flex-col gap-3 p-4 sm:p-5">
       <div className="flex items-start gap-4">
         <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 text-blue-500">
           <BookOpen className="h-6 w-6" />
@@ -29,8 +29,8 @@ export function BookCard({
         </div>
       </div>
       <p className="text-sm text-slate-600 line-clamp-2">{book.description}</p>
-      <div className="flex items-center justify-between">
-        <div className="flex gap-2">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap gap-2">
           <Badge>{book.category}</Badge>
           <Badge variant={book.available > 0 ? "success" : "danger"}>
             {book.available > 0 ? `${book.available} available` : "Unavailable"}

@@ -22,8 +22,8 @@ export default async function SuperAdminUsersPage() {
       </div>
       <div className="space-y-3">
         {data.users.map((u) => (
-          <Card key={u.id} className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          <Card key={u.id} className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex min-w-0 items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-blue-600 text-sm font-semibold text-white">
                 {u.avatar}
               </div>
@@ -32,7 +32,7 @@ export default async function SuperAdminUsersPage() {
                 <p className="text-sm text-slate-500">{u.email}</p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <Badge
                 variant={
                   u.role === "superadmin"

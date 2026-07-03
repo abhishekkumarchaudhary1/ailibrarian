@@ -17,7 +17,7 @@ export default async function CatalogPage() {
       userAvatar={session.avatar}
     >
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-slate-800">Book Catalog</h2>
+        <h2 className="text-xl font-bold text-slate-800 sm:text-2xl">Book Catalog</h2>
         <p className="text-slate-500">Browse and borrow from our collection</p>
       </div>
       <CatalogGrid books={data.books} />

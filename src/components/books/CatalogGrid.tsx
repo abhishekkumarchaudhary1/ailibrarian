@@ -6,7 +6,7 @@ import type { Book } from "@/lib/types";
 
 export function CatalogGrid({ books }: { books: Book[] }) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {books.map((book) => (
         <div key={book.id} className="relative">
           <BookCard book={book} />

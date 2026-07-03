@@ -22,7 +22,7 @@ export default async function SuperAdminDashboard() {
         <p className="text-slate-500">Library-wide analytics and management</p>
       </div>
 
-      <div className="mb-8 grid gap-4 sm:grid-cols-4">
+      <div className="mb-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         <StatCard label="Total Readers" value={data.stats.totalReaders} icon="Users" />
         <StatCard label="Active Loans" value={data.stats.activeLoans} icon="BookOpen" />
         <StatCard label="Books" value={data.stats.booksInCatalog} icon="Library" />
@@ -36,7 +36,7 @@ export default async function SuperAdminDashboard() {
             {data.users
               .filter((u) => u.role !== "reader")
               .map((u) => (
-                <Card key={u.id} className="flex items-center justify-between">
+                <Card key={u.id} className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-blue-600 text-xs font-semibold text-white">
                       {u.avatar}
