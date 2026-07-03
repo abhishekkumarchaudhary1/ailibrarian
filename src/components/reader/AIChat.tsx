@@ -10,14 +10,25 @@ interface Message {
   content: string;
 }
 
+interface SpeechResultEvent {
+  resultIndex: number;
+  results: {
+    length: number;
+    [index: number]: {
+      isFinal: boolean;
+      0: { transcript: string };
+    };
+  };
+}
+
 type SpeechRecognitionInstance = {
   continuous: boolean;
   interimResults: boolean;
   lang: string;
   start: () => void;
   stop: () => void;
-  onresult: ((event: SpeechRecognitionEvent) => void) | null;
-  onerror: ((event: SpeechRecognitionErrorEvent) => void) | null;
+  onresult: ((event: SpeechResultEvent) => void) | null;
+  onerror: (() => void) | null;
   onend: (() => void) | null;
 };
 
