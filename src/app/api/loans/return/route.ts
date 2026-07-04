@@ -18,7 +18,6 @@ export async function POST(req: NextRequest) {
   loan.status = "returned";
   const book = data.books.find((b) => b.id === loan.bookId);
   if (book) book.available += 1;
-  data.stats.activeLoans = Math.max(0, data.stats.activeLoans - 1);
 
   await saveData(data);
   return NextResponse.json({ ok: true });

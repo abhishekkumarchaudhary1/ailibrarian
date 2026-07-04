@@ -203,7 +203,7 @@ export function DashboardShell({
         </div>
       )}
 
-      <div className="flex flex-1 flex-col lg:ml-64">
+      <div className="flex min-w-0 flex-1 flex-col lg:ml-64">
         <header className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-slate-200/60 bg-white/70 px-4 py-3 backdrop-blur-md sm:px-6 lg:px-8 lg:py-4">
           <div className="flex min-w-0 items-center gap-3">
             <button
@@ -257,7 +257,7 @@ export function DashboardShell({
           </div>
         </header>
 
-        <main className="flex-1 p-4 pb-24 sm:p-6 lg:p-8 lg:pb-8">
+        <main className="min-w-0 flex-1 overflow-x-hidden p-4 pb-24 sm:p-6 lg:p-8 lg:pb-8">
           {children}
         </main>
       </div>

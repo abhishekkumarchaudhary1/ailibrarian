@@ -190,11 +190,5 @@
       "createdAt": "2026-03-01",
       "authorId": "usr_superadmin_1"
     }
-  ],
-  "stats": {
-    "totalReaders": 248,
-    "activeLoans": 67,
-    "booksInCatalog": 6,
-    "coursesOffered": 3
-  }
+  ]
 }

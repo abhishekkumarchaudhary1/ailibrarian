@@ -62,12 +62,6 @@ export interface MainData {
   courses: Course[];
   loans: Loan[];
   announcements: Announcement[];
-  stats: {
-    totalReaders: number;
-    activeLoans: number;
-    booksInCatalog: number;
-    coursesOffered: number;
-  };
 }
 
 export interface SessionUser {

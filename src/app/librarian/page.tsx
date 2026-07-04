@@ -6,12 +6,14 @@ import { StatCard } from "@/components/ui/StatCard";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { ReturnLoanButton } from "@/components/librarian/ReturnLoanButton";
+import { AdminAIPanel } from "@/components/admin/AdminAIPanel";
 
 export default async function LibrarianDashboard() {
   const session = await getSession();
   if (!session) redirect("/login");
 
   const data = await getData();
+  const readers = data.users.filter((u) => u.role === "reader");
   const activeLoans = data.loans.filter((l) => l.status !== "returned");
   const overdue = activeLoans.filter((l) => l.status === "overdue");
 
@@ -28,11 +30,15 @@ export default async function LibrarianDashboard() {
         <p className="text-slate-500">Manage books, loans, and readers</p>
       </div>
 
-      <div className="mb-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-        <StatCard label="Total Readers" value={data.stats.totalReaders} icon="Users" />
-        <StatCard label="Active Loans" value={data.stats.activeLoans} icon="BookOpen" />
-        <StatCard label="Books in Catalog" value={data.stats.booksInCatalog} icon="Library" />
+      <div className="mb-6 grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-4">
+        <StatCard label="Total Readers" value={readers.length} icon="Users" />
+        <StatCard label="Active Loans" value={activeLoans.length} icon="BookOpen" />
+        <StatCard label="Books in Catalog" value={data.books.length} icon="Library" />
         <StatCard label="Overdue" value={overdue.length} icon="GraduationCap" />
+      </div>
+
+      <div className="mb-8">
+        <AdminAIPanel />
       </div>
 
       <h3 className="mb-4 font-semibold text-slate-800">Recent Loans</h3>

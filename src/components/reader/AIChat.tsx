@@ -43,6 +43,15 @@ function getSpeechRecognition(): (new () => SpeechRecognitionInstance) | null {
   return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
 }
 
+const READER_SUGGESTIONS = [
+  "Explain neural networks simply",
+  "Summarize my course progress",
+  "Recommend books on AI",
+  "Help me understand design thinking",
+  "What books are available right now?",
+  "Quiz me on clean code principles",
+];
+
 export function AIChat({ courseId }: { courseId?: string }) {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -153,15 +162,15 @@ export function AIChat({ courseId }: { courseId?: string }) {
   }
 
   return (
-    <Card className="flex h-[min(70vh,calc(100dvh-11rem))] flex-col overflow-hidden p-0 sm:h-[calc(100vh-12rem)]">
-      <div className="flex-1 space-y-4 overflow-y-auto p-5">
+    <Card className="flex h-[min(65vh,calc(100dvh-14rem))] w-full flex-col overflow-hidden p-0 sm:h-[calc(100vh-12rem)]">
+      <div className="flex-1 space-y-4 overflow-y-auto overflow-x-hidden p-3 sm:p-5">
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`flex gap-3 ${msg.role === "user" ? "flex-row-reverse" : ""}`}
+            className={`flex gap-2 sm:gap-3 ${msg.role === "user" ? "flex-row-reverse" : ""}`}
           >
             <div
-              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
+              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full sm:h-8 sm:w-8 ${
                 msg.role === "assistant"
                   ? "bg-blue-100 text-blue-600"
                   : "bg-slate-100 text-slate-600"
@@ -174,7 +183,7 @@ export function AIChat({ courseId }: { courseId?: string }) {
               )}
             </div>
             <div
-              className={`max-w-[85%] rounded-2xl px-4 py-3 sm:max-w-[80%] ${
+              className={`max-w-[calc(100%-3rem)] rounded-2xl px-3 py-2.5 sm:px-4 sm:py-3 ${
                 msg.role === "assistant"
                   ? "bg-slate-50 text-slate-700"
                   : "bg-blue-600 text-white text-sm leading-relaxed"
@@ -205,6 +214,20 @@ export function AIChat({ courseId }: { courseId?: string }) {
         <div ref={bottomRef} />
       </div>
 
+      {!loading && (
+        <div className="flex flex-wrap gap-1.5 border-t border-slate-50 px-3 py-2 sm:gap-2 sm:px-4 sm:py-3">
+          {READER_SUGGESTIONS.map((s) => (
+            <button
+              key={s}
+              onClick={() => send(s)}
+              className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-600 transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 sm:px-3 sm:py-1.5 sm:text-xs"
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+      )}
+
       <div className="flex gap-2 border-t border-slate-100 p-3 sm:p-4">
         {voiceSupported && (
           <Button
@@ -229,7 +252,7 @@ export function AIChat({ courseId }: { courseId?: string }) {
           placeholder={
             listening ? "Listening..." : "Ask about your courses or books..."
           }
-          className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+          className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
         />
         <Button onClick={() => send()} disabled={loading || !input.trim()}>
           <Send className="h-4 w-4" />
