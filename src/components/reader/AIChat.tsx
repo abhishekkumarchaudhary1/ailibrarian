@@ -6,41 +6,14 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ChatMessage } from "@/components/reader/ChatMessage";
 import type { Book } from "@/lib/types";
+import {
+  getSpeechRecognition,
+  type SpeechRecognitionInstance,
+} from "@/lib/speech-recognition";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
-}
-
-interface SpeechResultEvent {
-  resultIndex: number;
-  results: {
-    length: number;
-    [index: number]: {
-      isFinal: boolean;
-      0: { transcript: string };
-    };
-  };
-}
-
-type SpeechRecognitionInstance = {
-  continuous: boolean;
-  interimResults: boolean;
-  lang: string;
-  start: () => void;
-  stop: () => void;
-  onresult: ((event: SpeechResultEvent) => void) | null;
-  onerror: (() => void) | null;
-  onend: (() => void) | null;
-};
-
-function getSpeechRecognition(): (new () => SpeechRecognitionInstance) | null {
-  if (typeof window === "undefined") return null;
-  const w = window as Window & {
-    SpeechRecognition?: new () => SpeechRecognitionInstance;
-    webkitSpeechRecognition?: new () => SpeechRecognitionInstance;
-  };
-  return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
 }
 
 const READER_SUGGESTIONS = [
@@ -147,9 +120,8 @@ export function AIChat({ courseId }: { courseId?: string }) {
         transcript += event.results[i][0].transcript;
       }
       setInput(transcript);
-      if (event.results[event.results.length - 1].isFinal && transcript.trim()) {
+      if (event.results[event.results.length - 1].isFinal) {
         recognition.stop();
-        send(transcript.trim());
       }
     };
 

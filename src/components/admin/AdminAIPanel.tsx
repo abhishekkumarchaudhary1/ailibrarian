@@ -8,9 +8,15 @@ import {
   Sparkles,
   ChevronDown,
   ChevronUp,
+  Mic,
+  MicOff,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { InlineCharts } from "@/components/admin/InlineCharts";
+import {
+  getSpeechRecognition,
+  type SpeechRecognitionInstance,
+} from "@/lib/speech-recognition";
 
 interface ChartItem {
   label: string;
@@ -50,7 +56,18 @@ export function AdminAIPanel() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(true);
+  const [listening, setListening] = useState(false);
+  const [voiceSupported, setVoiceSupported] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
+
+  useEffect(() => {
+    setVoiceSupported(!!getSpeechRecognition());
+  }, []);
+
+  useEffect(() => {
+    return () => recognitionRef.current?.stop();
+  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -103,6 +120,40 @@ export function AdminAIPanel() {
     },
     [input, loading, messages]
   );
+
+  function toggleListening() {
+    if (listening) {
+      recognitionRef.current?.stop();
+      setListening(false);
+      return;
+    }
+
+    const SpeechRecognition = getSpeechRecognition();
+    if (!SpeechRecognition) return;
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.lang = "en-US";
+
+    recognition.onresult = (event) => {
+      let transcript = "";
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      setInput(transcript);
+      if (event.results[event.results.length - 1].isFinal) {
+        recognition.stop();
+      }
+    };
+
+    recognition.onerror = () => setListening(false);
+    recognition.onend = () => setListening(false);
+
+    recognitionRef.current = recognition;
+    recognition.start();
+    setListening(true);
+  }
 
   function formatBlock(text: string) {
     const lines = text
@@ -244,11 +295,30 @@ export function AdminAIPanel() {
           )}
 
           <div className="flex gap-2 border-t border-slate-100 px-3 py-2 sm:px-4 sm:py-3">
+            {voiceSupported && (
+              <Button
+                type="button"
+                size="sm"
+                variant={listening ? "primary" : "secondary"}
+                onClick={toggleListening}
+                disabled={loading}
+                title={listening ? "Stop listening" : "Voice input"}
+                className={listening ? "animate-pulse" : ""}
+              >
+                {listening ? (
+                  <MicOff className="h-3.5 w-3.5" />
+                ) : (
+                  <Mic className="h-3.5 w-3.5" />
+                )}
+              </Button>
+            )}
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && send()}
-              placeholder="Ask about library analytics..."
+              placeholder={
+                listening ? "Listening..." : "Ask about library analytics..."
+              }
               className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
             />
             <Button
